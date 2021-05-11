@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/jdbc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/json-20210307.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/smtp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/mailapi.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

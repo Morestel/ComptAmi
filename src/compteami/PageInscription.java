@@ -6,6 +6,14 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import org.json.JSONObject;
+
 
 public class PageInscription extends JPanel implements Config{
 
@@ -56,10 +64,30 @@ public class PageInscription extends JPanel implements Config{
 
             @Override
             public void actionPerformed(final ActionEvent e) {
-               Utilisateur new_user = new Utilisateur(3, TextNom.getText(), TextMail.getText(), TextPrenom.getText(), 0, TextPassword.getText());
-               c.Inscription(new_user);
+                try(Socket sc = new Socket("localhost", 8001)){
+                 
+                    System.out.println("SOCKET = " + sc);
+                    InputStream is = sc.getInputStream();
+                    OutputStream os = sc.getOutputStream();
+                    PrintWriter writer = new PrintWriter(os);
+                    JSONObject new_user = new JSONObject();
+                    new_user.put("requete", "inscription");
+                    new_user.put("pseudo", TextNom.getText());
+                    new_user.put("email", TextMail.getText());
+                    new_user.put("password", TextPassword.getText());
+                    
+                    writer.write(new_user.toString());
+                    System.out.println(new_user.toString());
+                    writer.flush();
+                    System.out.println("On est là");
+                    sc.close();
+                    
+                } catch (UnknownHostException e1) {
+                    e1.printStackTrace();
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
             }
-
         });
         this.add(BoutonValider);
     }

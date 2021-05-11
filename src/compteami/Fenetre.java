@@ -54,8 +54,8 @@ public class Fenetre extends JPanel implements Config{
         // PageMessagerie pMessagerie = new PageMessagerie(event, connect, user);
         // fenetre.add(pMessagerie);
 
-        //PageInscription pInscription = new PageInscription(connect);
-        //fenetre.add(pInscription);
+        PageInscription pInscription = new PageInscription(connect);
+        fenetre.add(pInscription);
         fenetre.pack();
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH); 
