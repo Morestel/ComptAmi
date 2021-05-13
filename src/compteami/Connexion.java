@@ -200,7 +200,7 @@ public class Connexion {
     }
 
     public void ChargerMessage(Evenement event, PageMessagerie pMessagerie){
-        String query = "SELECT Contenu, Id_user, Date_envoie, Nom FROM Messagerie, Utilisateur WHERE Id_event = " + event.getId() + " AND Messagerie.Id_user = Utilisateur.Id";
+        String query = "SELECT Contenu, Id_user, Date_envoie, Pseudo FROM Messagerie, Utilisateur WHERE Id_event = " + event.getId() + " AND Messagerie.Id_user = Utilisateur.Id";
         try(ResultSet resultat = ts.executeQuery(query);){
             while(resultat.next()){
                 Message mess = new Message(resultat.getString(1),
