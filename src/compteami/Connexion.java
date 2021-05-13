@@ -48,11 +48,8 @@ public class Connexion {
      */
     public boolean Inscription(Utilisateur user){
         if (!this.Authentification(user)){ // On empÃªche que deux personnes ayant les mÃªmes infos s'inscrivent 
-            String requete = "INSERT INTO `utilisateur` (`Pseudo`, `Password`, `est_admin`) VALUES (" + 
-                                user.getPseudo() + "," + 
-                                user.getPassword() +  "," + 
-                                user.getAdmin() + ")";
-            String query = "INSERT INTO Utilisateur (Prenom, Nom, Mail, Password, est_admin) VALUES (?, ?, ?, ?, ?)";
+
+            String query = "INSERT INTO Utilisateur (Pseudo, Mail, Password, est_admin) VALUES ( ?, ?, ?, ?)";
 
             try(PreparedStatement ps = c.prepareStatement(query);){
            
@@ -79,11 +76,10 @@ public class Connexion {
         try(ResultSet resultat = ts.executeQuery(query);){
             while(resultat.next()){ 
                 // Stockage des informations
-                String prenom = resultat.getString(2);
-                String nom = resultat.getString(3);
-                String password = resultat.getString(4);
+                String pseudo = resultat.getString(2);
+                String password = resultat.getString(3);
                 // Comparaison
-                if (prenom.equals(user.getPseudo()) && password.equals(user.getPassword())){
+                if (pseudo.equals(user.getPseudo()) && password.equals(user.getPassword())){
                     return true; // On a trouvÃ© une correspondance
                 }
             }
@@ -153,7 +149,9 @@ public class Connexion {
             }
             return id;
         }catch(SQLException e){
-            return 0;
+            System.out.println("N'existe pas");
+        	return 0;
+            
         }
     }
 
@@ -219,7 +217,7 @@ public class Connexion {
     
     public List<Message> ChargerMessagerie(int id_event){
     	List<Message> m = new ArrayList<>();
-    	String query = "SELECT Contenu, Id_user, Date_envoie, Nom FROM Messagerie, Utilisateur WHERE Id_event = " + id_event + " AND Messagerie.Id_user = Utilisateur.Id";
+    	String query = "SELECT Contenu, Id_user, Date_envoie, Pseudo FROM Messagerie, Utilisateur WHERE Id_event = " + id_event + " AND Messagerie.Id_user = Utilisateur.Id";
         try(ResultSet resultat = ts.executeQuery(query);){
             while(resultat.next()){
                 Message mess = new Message(resultat.getString(1),
@@ -234,6 +232,24 @@ public class Connexion {
         }
     	return m;
     	
+    }
+    
+    /**
+     * Charge tous les pseudos dans une arraylist
+     * @return L'arraylist de tous les pseudos
+     */
+    public ArrayList<String> ChargerPseudo(){
+    	ArrayList<String> m = new ArrayList<>();
+    	String query = "SELECT Pseudo FROM Utilisateur";
+        try(ResultSet resultat = ts.executeQuery(query);){
+            while(resultat.next()){
+                String ps = resultat.getString(1);
+                m.add(ps);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    	return m;
     }
 
     public void InsererMessage(Evenement event, Message mess){
