@@ -42,7 +42,7 @@ public class PageMessagerie extends JPanel implements Config{
 
         this.setPreferredSize(new Dimension(LARGEUR_FENETRE/3, HAUTEUR_FENETRE));
 
-        // Chargement des messages contenus dans la base de données
+        // Chargement des messages contenus dans la base de donnÃ©es
         c.ChargerMessage(event, this);
 
         TextMessage = new JTextArea();
@@ -59,7 +59,7 @@ public class PageMessagerie extends JPanel implements Config{
                     Date date = new Date();  
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
                     String strDate = dateFormat.format(date);  
-                    Message mess = new Message(TextMessage.getText(), user.getId(), strDate);
+                    Message mess = new Message(TextMessage.getText(), user.getId(), strDate, user.getPseudo());
                     AddMessage(mess);
                     c.InsererMessage(event, mess);
                     TextMessage.setText("");

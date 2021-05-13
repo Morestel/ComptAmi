@@ -32,8 +32,8 @@ public class Fenetre extends JPanel implements Config{
 		
 
         Connexion connect = new Connexion();
-		Utilisateur user = new Utilisateur(1, "Paul", "Bertrand", "mail", 0, "BbQDuDim");
-        Utilisateur user2 = new Utilisateur(2, "Richard", "Testa", "mail", 0, "Jjkj");
+		Utilisateur user = new Utilisateur(1, "Paul", "mail", 0, "BbQDuDim");
+        Utilisateur user2 = new Utilisateur(2, "Richard", "mail", 0, "Jjkj");
         //connect.Inscription(user);
         System.out.println(connect.Authentification(user2));
         connect.Inscription(user2);
@@ -54,8 +54,8 @@ public class Fenetre extends JPanel implements Config{
         // PageMessagerie pMessagerie = new PageMessagerie(event, connect, user);
         // fenetre.add(pMessagerie);
 
-        PageInscription pInscription = new PageInscription(connect);
-        fenetre.add(pInscription);
+        //PageInscription pInscription = new PageInscription(connect);
+        //fenetre.add(pInscription);
         fenetre.pack();
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //fenetre.setExtendedState(JFrame.MAXIMIZED_BOTH); 

@@ -1,23 +1,17 @@
 package compteami;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.sql.*;
-
+import java.util.ArrayList;
 // import java.util.Date;
+import java.util.List;
 
 public class Connexion {
     private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    
     private final String JDBC_CONNEXION = "jdbc:mysql://localhost:4456/mt05697s";
     private final String JDBC_USER = "mt05697s";
     private final String JDBC_PWD = "3RSHLEL7";
+    
     /*
     private final String JDBC_CONNEXION = "jdbc:mysql://localhost/mydb";
     private final String JDBC_USER = "root";
@@ -25,10 +19,9 @@ public class Connexion {
     */
     Connection c;
     private Statement ts;
-    private Socket sc;
-    
+
     public Connexion() {
-        
+    	
         try {
             Class.forName(JDBC_DRIVER);
             System.out.println("Java Database Connectivity a ete trouve");
@@ -47,66 +40,38 @@ public class Connexion {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        sc = new Socket();
-        try {
-            //InetAddress server = InetAddress.getByName("ws://localhost:8080/CompteAmi");
-            //sc.connect(new InetSocketAddress(server, 8080));
-            sc = new Socket("localhost", 4443);
-            System.out.println("SOCKET = " + sc);
-            InputStream is = sc.getInputStream();
-            OutputStream os = sc.getOutputStream();
-            PrintWriter writer = new PrintWriter(os);
-            String com = "TEST 8080";
-             writer.print(com);
-            //ObjectOutputStream out = new ObjectOutputStream(sc.getOutputStream());
-            //out.writeObject(com);
-            //out.flush();
-            writer.flush();
-            System.out.println("On est là");
-            //out.close();
-            sc.close();
-            
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    
-
-
     }
 
     /**
      * Fonction d'inscription d'un utilisateur (Les informations seront verifiees anterieurement)
      * @param user Utilisateur a inscrire
      */
-    public void Inscription(Utilisateur user){
-        if (!this.Authentification(user)){ // On empêche que deux personnes ayant les mêmes infos s'inscrivent 
-            String requete = "INSERT INTO `utilisateur` (`Prenom`, `Nom`, `Password`, `est_admin`) VALUES (" + 
-                                user.getPrenom() + "," + 
-                                user.getNom() +  "," +
+    public boolean Inscription(Utilisateur user){
+        if (!this.Authentification(user)){ // On empÃªche que deux personnes ayant les mÃªmes infos s'inscrivent 
+            String requete = "INSERT INTO `utilisateur` (`Pseudo`, `Password`, `est_admin`) VALUES (" + 
+                                user.getPseudo() + "," + 
                                 user.getPassword() +  "," + 
                                 user.getAdmin() + ")";
             String query = "INSERT INTO Utilisateur (Prenom, Nom, Mail, Password, est_admin) VALUES (?, ?, ?, ?, ?)";
 
             try(PreparedStatement ps = c.prepareStatement(query);){
-                ps.setString(1, user.getPrenom());
-                ps.setString(2, user.getNom());
-                ps.setString(3, user.getMail());
-                ps.setString(4, user.getPassword());
+           
+                ps.setString(1, user.getPseudo());
+                ps.setString(2, user.getMail());
+                ps.setString(3, user.getPassword());
                 String ad = String.valueOf(user.getAdmin());
-                ps.setString(5, ad);
+                ps.setString(4, ad);
                 ps.executeUpdate();
             }catch(SQLException e){
                 e.printStackTrace();
             }
+            return true;
         }
+        return false;
     }
 
     /**
-     * Fonction d'authentification d'un utilisateur, vérifie que toutes les données fournies soient juste
+     * Fonction d'authentification d'un utilisateur, vÃ©rifie que toutes les donnÃ©es fournies soient juste
      * @param user Utilisateur souhaitant s'authentifier
      */
     public boolean Authentification(Utilisateur user){
@@ -118,13 +83,14 @@ public class Connexion {
                 String nom = resultat.getString(3);
                 String password = resultat.getString(4);
                 // Comparaison
-                if (prenom.equals(user.getPrenom()) && nom.equals(user.getNom()) && password.equals(user.getPassword())){
-                    return true; // On a trouvé une correspondance
+                if (prenom.equals(user.getPseudo()) && password.equals(user.getPassword())){
+                    return true; // On a trouvÃ© une correspondance
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+       
         return false;
     }
 
@@ -134,7 +100,7 @@ public class Connexion {
      */
     public void Creer_Event(Evenement e){
             String query = "INSERT INTO Evenement (Intitule, Description, Budget, Start, End) VALUES (?, ?, ?, ?, ?)";
-
+            
             try(PreparedStatement ps = c.prepareStatement(query);){
                 ps.setString(1, e.getIntitule());
                 ps.setString(2, e.getTexte());
@@ -146,6 +112,49 @@ public class Connexion {
             }catch(SQLException ex){
                 ex.printStackTrace();
             }
+    }
+    
+    /**
+     * Ajoute un participant à un évènement
+     * @param user Utilisateur qui participe
+     * @param e Evenement auquel il participe
+     */
+    public void Participe(String id_user, Evenement e){
+        String query = "INSERT INTO Participe (Id_event, Id_user) VALUES (?, ?)";
+        try(PreparedStatement ps = c.prepareStatement(query);){
+            String Id_event = String.valueOf(e.getId());
+            String Id_user = String.valueOf(id_user);
+            ps.setString(1, Id_event);
+            ps.setString(2, Id_user);
+            ps.executeUpdate();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+    
+    public void Participe(int id_user, String id_event) {
+    	String query = "INSERT INTO Participe (Id_event, Id_user) VALUES (?, ?)";
+        try(PreparedStatement ps = c.prepareStatement(query);){
+            ps.setString(1, id_event);
+            ps.setInt(2, id_user);
+            ps.executeUpdate();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+    	
+    }
+    
+    public int trouverId(String pseudo) {
+    	String query = "SELECT Id FROM Utilisateur WHERE pseudo = "+ pseudo; 
+    	try(ResultSet resultat = ts.executeQuery(query);){
+            int id = 0;
+            while(resultat.next()){ 
+                id = Integer.parseInt(resultat.getString(1));
+            }
+            return id;
+        }catch(SQLException e){
+            return 0;
+        }
     }
 
     /**
@@ -193,18 +202,38 @@ public class Connexion {
     }
 
     public void ChargerMessage(Evenement event, PageMessagerie pMessagerie){
-        String query = "SELECT Contenu, Id_user, Date_envoie FROM Messagerie WHERE Id_event = " + event.getId();
+        String query = "SELECT Contenu, Id_user, Date_envoie, Nom FROM Messagerie, Utilisateur WHERE Id_event = " + event.getId() + " AND Messagerie.Id_user = Utilisateur.Id";
         try(ResultSet resultat = ts.executeQuery(query);){
             while(resultat.next()){
                 Message mess = new Message(resultat.getString(1),
                                             Integer.parseInt(resultat.getString(2)),
-                                            resultat.getString(3)
+                                            resultat.getString(3),
+                                            resultat.getString(4)
                 );
                 pMessagerie.AddMessage(mess);
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+    
+    public List<Message> ChargerMessagerie(int id_event){
+    	List<Message> m = new ArrayList<>();
+    	String query = "SELECT Contenu, Id_user, Date_envoie, Nom FROM Messagerie, Utilisateur WHERE Id_event = " + id_event + " AND Messagerie.Id_user = Utilisateur.Id";
+        try(ResultSet resultat = ts.executeQuery(query);){
+            while(resultat.next()){
+                Message mess = new Message(resultat.getString(1),
+                                            Integer.parseInt(resultat.getString(2)),
+                                            resultat.getString(3),
+                                            resultat.getString(4)
+                );
+                m.add(mess);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    	return m;
+    	
     }
 
     public void InsererMessage(Evenement event, Message mess){
@@ -222,5 +251,14 @@ public class Connexion {
         }catch(SQLException ex){
             ex.printStackTrace();
         }
+    }
+    
+    public void close() {
+    	try {
+	    	ts.close();
+	    	c.close();
+    	}catch(SQLException e) {
+    		
+    	}
     }
 }
