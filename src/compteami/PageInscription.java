@@ -3,7 +3,11 @@ package compteami;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import com.sun.mail.handlers.text_html;
+
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.Dimension;
@@ -20,6 +24,7 @@ public class PageInscription extends JPanel implements Config{
      */
     private static final long serialVersionUID = 1L;
 
+    private transient PageInscription pageInscription;
     private transient Connexion c;
     private transient JTextField TextPseudo = new JTextField();
     private transient JPasswordField TextPassword = new JPasswordField();
@@ -33,11 +38,12 @@ public class PageInscription extends JPanel implements Config{
     private transient JLabel LabelMail = new JLabel("Mail : ");
     private transient JLabel LabelErreur = new JLabel();
     private transient JButton BoutonAccueil = new JButton("Accueil");
-    private transient JButton BoutonEvenement = new JButton("Evenements");
+    private transient JButton BoutonMessagerie = new JButton("Messagerie");
     private transient JButton BoutonConnexion = new JButton("Se Connecter");
 
-    public PageInscription(Connexion c){
-        this.c = c;        
+    public PageInscription(Connexion c, JFrame window, JPanel PageAccueil, JPanel PageMessagerie, JPanel PageConnexion){
+    	pageInscription = this;
+        this.c = c; 
 
         //Définition taille des champs        
         int FieldWidth = LARGEUR_FENETRE/3;
@@ -80,7 +86,7 @@ public class PageInscription extends JPanel implements Config{
         Dimension boutonSizeDimension = BoutonValider.getPreferredSize();
         BoutonValider.setBounds((LARGEUR_FENETRE/2 - boutonSizeDimension.width/2) , (HAUTEUR_FENETRE/2 + 2*FieldSpacing + FieldSpacing/2 + 2*FieldHeight) , boutonSizeDimension.width , boutonSizeDimension.height);        
         BoutonAccueil.setBounds(20, 20, BoutonAccueil.getPreferredSize().width, BoutonAccueil.getPreferredSize().height);
-        BoutonEvenement.setBounds(BoutonAccueil.getX() , (BoutonAccueil.getY()+BoutonAccueil.getPreferredSize().height+5) , (BoutonEvenement.getPreferredSize().width+1) , BoutonEvenement.getPreferredSize().height);
+        BoutonMessagerie.setBounds(BoutonAccueil.getX() , (BoutonAccueil.getY()+BoutonAccueil.getPreferredSize().height+5) , (BoutonMessagerie.getPreferredSize().width+1) , BoutonMessagerie.getPreferredSize().height);
         BoutonConnexion.setBounds((LARGEUR_FENETRE - BoutonConnexion.getPreferredSize().width - 20) , BoutonAccueil.getY() , (BoutonConnexion.getPreferredSize().width+1) , BoutonConnexion.getPreferredSize().height);
 
 
@@ -147,6 +153,42 @@ public class PageInscription extends JPanel implements Config{
             }
         });
         
+        //Action bouton accueil
+        BoutonAccueil.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				window.remove(pageInscription);
+				window.add(PageAccueil);
+				window.repaint();
+				window.pack();
+			}
+		});
+        
+        //Action bouton messagerie
+        BoutonMessagerie.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				window.remove(pageInscription);
+				window.add(PageMessagerie);
+				window.repaint();
+				window.pack();				
+			}
+		});
+        
+        //Action bouton connexion
+        BoutonConnexion.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				window.remove(pageInscription);
+				window.add(PageConnexion);
+				window.repaint();
+				window.pack();				
+			}
+		});
+        
         this.setLayout(null);
         this.add(TextPseudo);
         this.add(TextPassword);
@@ -160,7 +202,7 @@ public class PageInscription extends JPanel implements Config{
         this.add(LabelTitre);
         this.add(LabelErreur);
         this.add(BoutonAccueil);
-        this.add(BoutonEvenement);
+        this.add(BoutonMessagerie);
         this.add(BoutonConnexion);
     }
 }

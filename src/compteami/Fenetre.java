@@ -40,7 +40,7 @@ public class Fenetre extends JPanel implements Config{
 
         Evenement event = new Evenement("Manger avec tata michelle", 40, "On mange samedi matin chez tata", new Date(2021, 04, 11), new Date(2021, 05, 11), connect);
         PageEvenement pEvent = new PageEvenement(event, connect, user);
-        PageInscription pInscription = new PageInscription(connect);
+        PageInscription pInscription = new PageInscription(connect, fenetre, pEvent, pEvent, pEvent);
 
         /*
         Mail email = new Mail("morestelthomas445648456@gmail.com", "Yo", "^^");
