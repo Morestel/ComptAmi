@@ -32,6 +32,9 @@ public class PageInscription extends JPanel implements Config{
     private transient JLabel LabelConfirmPassword = new JLabel("Confirm your password : ");
     private transient JLabel LabelMail = new JLabel("Mail : ");
     private transient JLabel LabelErreur = new JLabel();
+    private transient JButton BoutonAccueil = new JButton("Accueil");
+    private transient JButton BoutonEvenement = new JButton("Evenements");
+    private transient JButton BoutonConnexion = new JButton("Se Connecter");
 
     public PageInscription(Connexion c){
         this.c = c;        
@@ -73,10 +76,14 @@ public class PageInscription extends JPanel implements Config{
         LabelHeight = metrics.getHeight()+5;
         LabelMail.setBounds((LARGEUR_FENETRE/2 - FieldWidth/2 - LabelWidth - LabelSpacing) , (HAUTEUR_FENETRE/2 + FieldSpacing/2 + FieldHeight + FieldSpacing) , LabelWidth , LabelHeight);
 
-        // Position + Taille Bouton
+        // Position + Taille Boutons
         Dimension boutonSizeDimension = BoutonValider.getPreferredSize();
         BoutonValider.setBounds((LARGEUR_FENETRE/2 - boutonSizeDimension.width/2) , (HAUTEUR_FENETRE/2 + 2*FieldSpacing + FieldSpacing/2 + 2*FieldHeight) , boutonSizeDimension.width , boutonSizeDimension.height);        
-        
+        BoutonAccueil.setBounds(20, 20, BoutonAccueil.getPreferredSize().width, BoutonAccueil.getPreferredSize().height);
+        BoutonEvenement.setBounds(BoutonAccueil.getX() , (BoutonAccueil.getY()+BoutonAccueil.getPreferredSize().height+5) , (BoutonEvenement.getPreferredSize().width+1) , BoutonEvenement.getPreferredSize().height);
+        BoutonConnexion.setBounds((LARGEUR_FENETRE - BoutonConnexion.getPreferredSize().width - 20) , BoutonAccueil.getY() , (BoutonConnexion.getPreferredSize().width+1) , BoutonConnexion.getPreferredSize().height);
+
+
         //Titre de la page
         Font defaultFont = LabelTitre.getFont();
         defaultFont = defaultFont.deriveFont(30.0f);
@@ -152,5 +159,8 @@ public class PageInscription extends JPanel implements Config{
         this.add(BoutonValider);
         this.add(LabelTitre);
         this.add(LabelErreur);
+        this.add(BoutonAccueil);
+        this.add(BoutonEvenement);
+        this.add(BoutonConnexion);
     }
 }
