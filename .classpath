@@ -6,10 +6,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/jdbc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/json-20210307.jar"/>
-	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/smtp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/mores/Documents/L3/S6/Dev_Web/Projet/ComptAmi/mailapi.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/jdbc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/json-20210307.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/smtp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/mailapi.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
