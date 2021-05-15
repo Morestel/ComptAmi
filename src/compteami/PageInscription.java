@@ -24,7 +24,6 @@ public class PageInscription extends JPanel implements Config{
      */
     private static final long serialVersionUID = 1L;
 
-    private transient PageInscription pageInscription;
     private transient Connexion c;
     private transient JTextField TextPseudo = new JTextField();
     private transient JPasswordField TextPassword = new JPasswordField();
@@ -41,9 +40,9 @@ public class PageInscription extends JPanel implements Config{
     private transient JButton BoutonMessagerie = new JButton("Messagerie");
     private transient JButton BoutonConnexion = new JButton("Se Connecter");
 
-    public PageInscription(Connexion c, JFrame window, JPanel PageAccueil, JPanel PageMessagerie, JPanel PageConnexion){
-    	pageInscription = this;
-        this.c = c; 
+    public PageInscription(Connexion c){
+    	this.setName("pageInscription");
+        this.c = c;
 
         //Définition taille des champs        
         int FieldWidth = LARGEUR_FENETRE/3;
@@ -153,41 +152,6 @@ public class PageInscription extends JPanel implements Config{
             }
         });
         
-        //Action bouton accueil
-        BoutonAccueil.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				window.remove(pageInscription);
-				window.add(PageAccueil);
-				window.repaint();
-				window.pack();
-			}
-		});
-        
-        //Action bouton messagerie
-        BoutonMessagerie.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				window.remove(pageInscription);
-				window.add(PageMessagerie);
-				window.repaint();
-				window.pack();				
-			}
-		});
-        
-        //Action bouton connexion
-        BoutonConnexion.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				window.remove(pageInscription);
-				window.add(PageConnexion);
-				window.repaint();
-				window.pack();				
-			}
-		});
         
         this.setLayout(null);
         this.add(TextPseudo);
@@ -201,8 +165,5 @@ public class PageInscription extends JPanel implements Config{
         this.add(BoutonValider);
         this.add(LabelTitre);
         this.add(LabelErreur);
-        this.add(BoutonAccueil);
-        this.add(BoutonMessagerie);
-        this.add(BoutonConnexion);
     }
 }

@@ -35,6 +35,7 @@ public class PageMessagerie extends JPanel implements Config{
 
 
     public PageMessagerie(Evenement event, Connexion c, Utilisateur current_user){
+    	this.setName("pageMessagerie");
         this.event = event;
         this.listeMessage = new ArrayList<>();
         this.c = c;

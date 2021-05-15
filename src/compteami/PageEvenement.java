@@ -24,6 +24,7 @@ public class PageEvenement extends JPanel implements Config{
     private transient Utilisateur user;
 
     public PageEvenement(Evenement event, Connexion c, Utilisateur current_user){
+    	this.setName("pageAccueil");
         this.c = c;
         this.event = event;
         this.user = current_user;
