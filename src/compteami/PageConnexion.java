@@ -25,8 +25,8 @@ public class PageConnexion extends JPanel implements Config{
     private static final long serialVersionUID = 1L;
 
     private transient Connexion c;
-    private transient JTextField TextPseudo = new JTextField();
-    private transient JPasswordField TextPassword = new JPasswordField();
+    private transient JTextField TextPseudo = new JTextField("");
+    private transient JPasswordField TextPassword = new JPasswordField("");
     private transient JButton BoutonValider = new JButton("Se Connecter");
     private transient JButton boutonInscription = new JButton("S'Inscrire");
     private transient JLabel LabelTitre = new JLabel("Connexion");
@@ -110,7 +110,18 @@ public class PageConnexion extends JPanel implements Config{
             		
             		else {
             			Utilisateur new_user = new Utilisateur(69, TextPseudo.getText(), null, 0, PasswordToString);
-            			c.Authentification(new_user);
+            			if (c.Authentification(new_user)) {
+            				System.out.println("connexion ok");
+            				Fenetre.userPseudoLabel.setText(TextPseudo.getText());
+            				//Fenetre.userPseudoLabel.setPreferredSize(new Dimension(Fenetre.userPseudoLabel.getPreferredSize().width, Fenetre.userPseudoLabel.getPreferredSize().height));
+            				Fenetre.navigationBar.repaint();
+            			} else {
+                    		LabelErreur.setText("Pseudo or password are incorrect");
+                    		LabelErreur.setBounds((LARGEUR_FENETRE/2 - (LabelErreur.getPreferredSize().width/2)), (BoutonValider.getY() + validerButtonSize.height + 10), LabelErreur.getPreferredSize().width, LabelErreur.getPreferredSize().height);
+                    		LabelErreur.repaint();
+            				System.out.println("connexion pas ok");
+            			}
+            			
             		}
             	}
             }

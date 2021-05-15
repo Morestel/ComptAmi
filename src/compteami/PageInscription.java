@@ -25,10 +25,10 @@ public class PageInscription extends JPanel implements Config{
     private static final long serialVersionUID = 1L;
 
     private transient Connexion c;
-    private transient JTextField TextPseudo = new JTextField();
-    private transient JPasswordField TextPassword = new JPasswordField();
-    private transient JPasswordField TextConfirmPassword = new JPasswordField();
-    private transient JTextField TextMail = new JTextField();
+    private transient JTextField TextPseudo = new JTextField("");
+    private transient JPasswordField TextPassword = new JPasswordField("");
+    private transient JPasswordField TextConfirmPassword = new JPasswordField("");
+    private transient JTextField TextMail = new JTextField("");
     private transient JButton BoutonValider = new JButton("S'Inscrire");
     private transient JLabel LabelTitre = new JLabel("Inscription");
     private transient JLabel LabelPseudo = new JLabel("Pseudo : ");
@@ -150,7 +150,16 @@ public class PageInscription extends JPanel implements Config{
             		
             		else {
             			Utilisateur new_user = new Utilisateur(69, TextPseudo.getText(), TextMail.getText(), 0, PasswordToString);
-            			c.Inscription(new_user);
+            			if (c.Inscription(new_user)) {
+            				LabelErreur.setText("Votre inscription a bien été effectuée");
+            				LabelErreur.setBounds((LARGEUR_FENETRE/2 - (LabelErreur.getPreferredSize().width/2)), (BoutonValider.getY() + boutonSizeDimension.height + 10), LabelErreur.getPreferredSize().width, LabelErreur.getPreferredSize().height);
+            				System.out.println("inscription ok");
+            			} else {
+            				LabelErreur.setText("L'inscription a échouée");
+            				LabelErreur.setBounds((LARGEUR_FENETRE/2 - (LabelErreur.getPreferredSize().width/2)), (BoutonValider.getY() + boutonSizeDimension.height + 10), LabelErreur.getPreferredSize().width, LabelErreur.getPreferredSize().height);
+            				System.out.println("inscription ok");
+            			}
+            			LabelErreur.repaint();
             		}
             	}
             }

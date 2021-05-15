@@ -5,6 +5,7 @@ import javax.swing.JToolBar;
 import javax.swing.JToolBar.Separator;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,6 +31,12 @@ public class Fenetre extends JPanel implements Config{
     private static PageInscription pInscription;
     private static PageConnexion pConnexion;
     private static PageMessagerie pMessagerie;
+    public static JToolBar navigationBar = new JToolBar();
+    private static JButton accueilBouton = new JButton("Accueil");
+    private static JButton messagerieBouton = new JButton("Messagerie");
+    private static JButton connexionBouton = new JButton("Se Connecter");
+    private static JButton inscriptionBouton = new JButton("S'Inscrire");
+    public static JLabel userPseudoLabel = new JLabel("Vous n'etes pas connecte");
 
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
     public static void main(String[] args) {
@@ -57,16 +64,14 @@ public class Fenetre extends JPanel implements Config{
         pMessagerie = new PageMessagerie(event, connect, user);
         
         //Barre de navigation
-        JToolBar navigationBar = new JToolBar();
         navigationBar.setName("navigationBarre");
         navigationBar.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_NAVIGATION));
+        int maxWidth = LARGEUR_FENETRE - accueilBouton.getPreferredSize().width - messagerieBouton.getPreferredSize().width - inscriptionBouton.getPreferredSize().width - connexionBouton.getPreferredSize().width;
+        System.out.println(LARGEUR_FENETRE);
+        System.out.println(maxWidth);
+        userPseudoLabel.setBounds((LARGEUR_FENETRE/2 - userPseudoLabel.getPreferredSize().width/2), 0, maxWidth, userPseudoLabel.getPreferredSize().height);
 
-        JButton accueilBouton = new JButton("Accueil");
-        JButton messagerieBouton = new JButton("Messagerie");
-        JButton connexionBouton = new JButton("Se Connecter");
-        JButton inscriptionBouton = new JButton("S'Inscrire");
-
-        
+                
         //Action des boutons
         accueilBouton.addActionListener(new ActionListener() {
 			@Override
@@ -178,21 +183,47 @@ public class Fenetre extends JPanel implements Config{
 
         
         //Ajout des boutons dans la barre de navigation
+        //Boutons de gauche
+        JToolBar toolBarGauche = new JToolBar();
+        toolBarGauche.setFloatable(false);
+        toolBarGauche.addSeparator();
+        toolBarGauche.add(accueilBouton);
+        toolBarGauche.addSeparator();
+        toolBarGauche.add(messagerieBouton);
+        
+        //Boutons de droite
+        JToolBar toolBarDroite = new JToolBar();
+        toolBarDroite.setFloatable(false);
+        toolBarDroite.add(inscriptionBouton);
+        toolBarDroite.addSeparator();
+        toolBarDroite.add(connexionBouton);
+        toolBarGauche.addSeparator();
+        
+        JToolBar toolBarCentre = new JToolBar();
+        toolBarCentre.setFloatable(false);
+        toolBarGauche.addSeparator();
+        toolBarCentre.add(userPseudoLabel);
+        toolBarGauche.addSeparator();
+        
+        navigationBar.setFloatable(false);
+        navigationBar.setLayout(new BorderLayout());
+        navigationBar.add(toolBarGauche, BorderLayout.WEST);
+        navigationBar.add(toolBarDroite, BorderLayout.EAST);
+        navigationBar.add(toolBarCentre, BorderLayout.CENTER);
+        
+        /*
+        navigationBar.setFloatable(false);
         navigationBar.addSeparator();
-        navigationBar.add(accueilBouton);
+        navigationBar.add(accueilBouton, BorderLayout.WEST);
         navigationBar.addSeparator();
-        navigationBar.add(messagerieBouton);
-        navigationBar.addSeparator(new Dimension((LARGEUR_FENETRE-
-        		accueilBouton.getPreferredSize().width-
-        		messagerieBouton.getPreferredSize().width-
-        		inscriptionBouton.getPreferredSize().width-
-        		connexionBouton.getPreferredSize().width) , 0));
-        navigationBar.add(inscriptionBouton);
+        navigationBar.add(messagerieBouton, BorderLayout.WEST);
         navigationBar.addSeparator();
-        navigationBar.add(connexionBouton);
+        navigationBar.add(userPseudoLabel);
         navigationBar.addSeparator();
-
-        navigationBar.setFloatable(false);        
+        navigationBar.add(inscriptionBouton, BorderLayout.EAST);
+        navigationBar.addSeparator();
+        navigationBar.add(connexionBouton, BorderLayout.EAST);
+        navigationBar.addSeparator(); */    
         
 
         /*
