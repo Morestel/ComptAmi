@@ -54,7 +54,7 @@ public class Fenetre extends JPanel implements Config{
         pAccueil = new PageEvenement(event, connect, user);
         pInscription = new PageInscription(connect);
         pConnexion = new PageConnexion(connect);
-
+        pMessagerie = new PageMessagerie(event, connect, user);
         
         //Barre de navigation
         JToolBar navigationBar = new JToolBar();
@@ -81,7 +81,7 @@ public class Fenetre extends JPanel implements Config{
 	                	fenetre.remove(pInscription);
 	                }
 	                
-	                else if (component.getName().equals("pageAccueil")) {
+	                else if (component.getName().equals("pageEvent")) {
 	                	fenetre.remove(pAccueil);
 	                }
 	                
@@ -108,7 +108,7 @@ public class Fenetre extends JPanel implements Config{
 	                	fenetre.remove(pInscription);
 	                }
 	                
-	                else if (component.getName().equals("pageAccueil")) {
+	                else if (component.getName().equals("pageEvent")) {
 	                	fenetre.remove(pAccueil);
 	                }
 	                
@@ -116,7 +116,7 @@ public class Fenetre extends JPanel implements Config{
 	                	fenetre.remove(pMessagerie);
 	                }
 	            }
-				fenetre.add(pConnexion);
+				fenetre.add(pMessagerie);
 				fenetre.repaint();
 				fenetre.pack();
 			}
@@ -135,7 +135,7 @@ public class Fenetre extends JPanel implements Config{
 	                	fenetre.remove(pInscription);
 	                }
 	                
-	                else if (component.getName().equals("pageAccueil")) {
+	                else if (component.getName().equals("pageEvent")) {
 	                	fenetre.remove(pAccueil);
 	                }
 	                
@@ -162,7 +162,7 @@ public class Fenetre extends JPanel implements Config{
 	                	fenetre.remove(pInscription);
 	                }
 	                
-	                else if (component.getName().equals("pageAccueil")) {
+	                else if (component.getName().equals("pageEvent")) {
 	                	fenetre.remove(pAccueil);
 	                }
 	                

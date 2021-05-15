@@ -34,6 +34,10 @@ public class PageConnexion extends JPanel implements Config{
     private transient JLabel LabelPassword = new JLabel("Password : ");
     private transient JLabel LabelErreur = new JLabel();
 
+    /**
+     * Affichage de la page qui permet à l'utilisateur de s'authentifier
+     * @param c
+     */
     public PageConnexion(Connexion c){
     	this.setName("pageConnexion");
         this.c = c; 

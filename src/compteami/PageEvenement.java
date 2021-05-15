@@ -23,12 +23,18 @@ public class PageEvenement extends JPanel implements Config{
     private transient JTextField TextMontant;
     private transient Utilisateur user;
 
+    /**
+     * Affiche la page de l'evenement passe en parametre
+     * @param event
+     * @param c
+     * @param current_user
+     */
     public PageEvenement(Evenement event, Connexion c, Utilisateur current_user){
-    	this.setName("pageAccueil");
+    	this.setName("pageEvent");
         this.c = c;
         this.event = event;
         this.user = current_user;
-        this.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
+        this.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_PAGE));
 
         BoutonDelete = new JButton("Supprimer");
 
@@ -61,7 +67,7 @@ public class PageEvenement extends JPanel implements Config{
         });
         this.add(BoutonDepense);
 
-        PageMessagerie pMessagerie = new PageMessagerie(this.event, c, this.user);
+        PageMessagerie pMessagerie = new PageMessagerie(event, c, user);
         this.add(pMessagerie);
     }
 

@@ -33,7 +33,12 @@ public class PageMessagerie extends JPanel implements Config{
     private transient JTextArea TextMessage;
     private transient Utilisateur user;
 
-
+    /**
+     * Affiche la page des messages concernant un evenement passe en parametre
+     * @param event
+     * @param c
+     * @param current_user
+     */
     public PageMessagerie(Evenement event, Connexion c, Utilisateur current_user){
     	this.setName("pageMessagerie");
         this.event = event;

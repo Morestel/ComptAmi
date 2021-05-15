@@ -40,6 +40,10 @@ public class PageInscription extends JPanel implements Config{
     private transient JButton BoutonMessagerie = new JButton("Messagerie");
     private transient JButton BoutonConnexion = new JButton("Se Connecter");
 
+    /**
+     * Affiche la page qui permet a l'utilisateur de s'inscrire
+     * @param c
+     */
     public PageInscription(Connexion c){
     	this.setName("pageInscription");
         this.c = c;
