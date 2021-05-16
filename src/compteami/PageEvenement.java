@@ -2,6 +2,8 @@ package compteami;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -25,7 +27,7 @@ public class PageEvenement extends JPanel implements Config{
     private transient JTextField TextMontant;
     private transient Utilisateur user;
     private transient JButton messagerieBouton = new JButton("Messagerie");
-
+    
     /**
      * Affiche la page de l'evenement passe en parametre
      * @param event
@@ -58,15 +60,15 @@ public class PageEvenement extends JPanel implements Config{
             }
 
         });
-        
         //Action bouton depense
         BoutonDepense.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (!TextMontant.getText().isEmpty()){
                     int montant = Integer.parseInt(TextMontant.getText());
-                    getEvent().remboursement(montant);
-                    repaint();
+                    Connexion connect = new Connexion();
+                    connect.Transaction(event.getId(), user.getId(), montant);
+                            
                 }
             }
         });
@@ -107,12 +109,13 @@ public class PageEvenement extends JPanel implements Config{
     @Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-        g.drawString(getEvent().getIntitule(), 10, 10);
-        g.drawString(getEvent().getTexte(), 10, 30);
-        g.drawString(String.valueOf(getEvent().getBudget()), 10, 50);
-        g.drawString(getEvent().getStart().toString(), 10, 70);
-        g.drawString(getEvent().getEnd().toString(), 50, 70);
+        g.drawString("Intitulé : " + getEvent().getIntitule(), 30, 60);
+        g.drawString("Description : " + getEvent().getTexte(), 30, 100);
+        g.drawString("Budget initial: " + String.valueOf(getEvent().getBudget()), 30, 140);
+        g.drawString("Reste à payer: " + getEvent().getBudget(), 200, 140);
+        g.drawString("Date début : " + getEvent().getStart().toString(), 30, 180);
+        g.drawString("Date fin : " + getEvent().getEnd().toString(), 200, 180);
 
-        g.drawString("Reste à payer: " + getEvent().getBudget(), 200, 300);
+        
 	}
 }
