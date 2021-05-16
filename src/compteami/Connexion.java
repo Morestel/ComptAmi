@@ -5,6 +5,7 @@ import java.util.ArrayList;
 // import java.util.Date;
 import java.util.List;
 
+
 public class Connexion {
     private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     
@@ -77,7 +78,7 @@ public class Connexion {
             while(resultat.next()){ 
                 // Stockage des informations
                 String pseudo = resultat.getString(2);
-                String password = resultat.getString(3);
+                String password = resultat.getString(4);
                 // Comparaison
                 if (pseudo.equals(user.getPseudo()) && password.equals(user.getPassword())){
                     return true; // On a trouvÃƒÂ© une correspondance
@@ -140,20 +141,26 @@ public class Connexion {
     	
     }
     
-    public int trouverId(String pseudo) {
-    	String query = "SELECT Id FROM Utilisateur WHERE pseudo = "+ pseudo; 
-    	try(ResultSet resultat = ts.executeQuery(query);){
-            int id = 0;
-            while(resultat.next()){ 
-                id = Integer.parseInt(resultat.getString(1));
-            }
-            return id;
-        }catch(SQLException e){
-            System.out.println("N'existe pas");
-        	return 0;
-            
-        }
-    }
+    /**
+    * Trouve id en fonction d'un pseudo
+    * @param pseudo
+    * @return id à retourner
+    */
+   public int trouverId(String pseudo) {
+       String query = "SELECT Id FROM Utilisateur WHERE pseudo = '"+ pseudo + "' "; 
+       try(ResultSet resultat = ts.executeQuery(query);){
+           int id = -1;
+           
+           while(resultat.next()){
+               id = Integer.parseInt(resultat.getString(1));
+           }
+           return id;
+       }catch(SQLException e){
+           e.printStackTrace();
+           return -1;
+           
+       }
+   }
 
     /**
      * Suppression d'un evenement
@@ -267,6 +274,31 @@ public class Connexion {
         }catch(SQLException ex){
             ex.printStackTrace();
         }
+    }
+    
+    /**
+     * Récupère event qui concerne le user
+     * @param id_user
+     * @return
+     */
+    public ArrayList<Evenement> ChargerEvent(int id_user){
+    	ArrayList<Evenement> e = new ArrayList<>();
+    	String query = "SELECT * FROM Evenement, Participe WHERE Evenement.Id = Participe.Id_event AND Id_user = '" + id_user + "'";
+    	try(ResultSet resultat = ts.executeQuery(query);){
+            while(resultat.next()){   
+                int id = resultat.getInt(1);             
+            	String intitule = resultat.getString(2);
+                String texte = resultat.getString(3);
+                int montant = resultat.getInt(4);
+                java.sql.Date start = resultat.getDate(5);
+                java.sql.Date end = resultat.getDate(6);
+                Evenement event = new Evenement(id, intitule, montant, texte, start, end);
+                e.add(event);
+            }
+        }catch(SQLException e1){
+            e1.printStackTrace();
+        }	
+    	return e;
     }
     
     public void close() {

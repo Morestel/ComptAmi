@@ -1,7 +1,11 @@
 package compteami;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -43,6 +47,39 @@ public class PageAccueil extends JPanel implements Config{
         			createEventBouton.getPreferredSize().width+5,
         			createEventBouton.getPreferredSize().height);
         	
+        	//Boutons des evenements
+        	JButton[] listeBouton = new JButton[15];
+            ArrayList<Evenement> liste = c.ChargerEvent(session.getUser().getId());
+            int i = 0;
+            int ecart = 40;
+            PageAccueil pAccueil = this;
+            for (Evenement e : liste){
+                listeBouton[i] = new JButton(e.getIntitule());
+                if (i == 0) {
+                	listeBouton[i].setBounds((LARGEUR_FENETRE/2 - listeBouton[i].getPreferredSize().width/2), (createEventBouton.getY() + 100), (listeBouton[i].getPreferredSize().width), (listeBouton[i].getPreferredSize().height));
+                } else {
+                	listeBouton[i].setBounds((LARGEUR_FENETRE/2 - listeBouton[i].getPreferredSize().width/2), (listeBouton[i-1].getY() + ecart), (listeBouton[i].getPreferredSize().width), (listeBouton[i].getPreferredSize().height));
+                }
+            	listeBouton[i].addActionListener(new ActionListener() {
+	                @Override
+	                public void actionPerformed(ActionEvent ee) {
+	                   PageEvenement pEvent = new PageEvenement(e, c, session.getUser());
+	                   Component[] components = Fenetre.fenetre.getContentPane().getComponents();
+	                   for (Component component : components) {
+	                	   if (component.getName().equals("pageAccueil")) {
+	                		   Fenetre.fenetre.remove(pAccueil);
+	                	   }
+	                   }
+	                   Fenetre.fenetre.add(pEvent);
+	                   Fenetre.fenetre.repaint();
+	        	       Fenetre.navigationBar.repaint();
+	        	       Fenetre.fenetre.pack();
+	                }
+                });
+                
+                this.add(listeBouton[i]);
+                i++;
+            }
         }
         
         else {

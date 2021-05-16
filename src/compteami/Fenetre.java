@@ -34,8 +34,10 @@ public class Fenetre extends JPanel implements Config{
     private static PageConnexion pConnexion;
     private static PageMessagerie pMessagerie;
     public static JToolBar navigationBar = new JToolBar();
+    public static JToolBar toolBarGauche = new JToolBar();
+    public static JToolBar toolBarDroite = new JToolBar();
     private static JButton accueilBouton = new JButton("Accueil");
-    private static JButton messagerieBouton = new JButton("Messagerie");
+    //private static JButton messagerieBouton = new JButton("Messagerie");
     public static JButton connexionBouton = new JButton("Se Connecter");
     private static JButton inscriptionBouton = new JButton("S'Inscrire");
     public static JLabel userPseudoLabel = new JLabel();
@@ -52,15 +54,12 @@ public class Fenetre extends JPanel implements Config{
         fenetre.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
 
         Connexion connect = new Connexion();
-		Utilisateur user = new Utilisateur(1, "Paul", "mail", 0, "BbQDuDim");
-        Utilisateur user2 = new Utilisateur(2, "Richard", "mail", 0, "Jjkj");
 
-        Evenement event = new Evenement("Manger avec tata michelle", 40, "On mange samedi matin chez tata", new Date(2021, 04, 11), new Date(2021, 05, 11), connect);
+        //Evenement event = new Evenement("Manger avec tata michelle", 40, "On mange samedi matin chez tata", new Date(2021, 04, 11), new Date(2021, 05, 11), connect);
         pAccueil = new PageAccueil(connect, session);
-        pEvent = new PageEvenement(event, connect, user);
-        pInscription = new PageInscription(connect);
+        pInscription = new PageInscription(connect, session);
         pConnexion = new PageConnexion(connect, session);
-        pMessagerie = new PageMessagerie(event, connect, user);
+        //pMessagerie = new PageMessagerie(event, connect, session.getUser());
         
         //Barre de navigation
         navigationBar.setName("navigationBarre");
@@ -80,88 +79,40 @@ public class Fenetre extends JPanel implements Config{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Component[] components = fenetre.getContentPane().getComponents();
-	            for (Component component : components) {
-	            	if (component.getName().equals("pageAccueil")) {
-	                	fenetre.remove(pAccueil);
-	                }
-	            	
-	            	else if (component.getName().equals("pageConnexion")) {
-	                	fenetre.remove(pConnexion);
-	                }
-	                
-	                else if (component.getName().equals("pageInscription")) {
-	                	fenetre.remove(pInscription);
-	                }
-	                
-	                else if (component.getName().equals("pageEvent")) {
-	                	fenetre.remove(pEvent);
-	                }
-	                
-	                else if (component.getName().equals("pageMessagerie")) {
-	                	fenetre.remove(pMessagerie);
-	                }
+				for (Component component : components) {
+	            	if (!(component.getName().equals("navigationBarre"))) {
+	                	fenetre.remove(component);
+	            	}
 	            }
-				fenetre.add(pAccueil);
+				fenetre.add(new PageAccueil(connect, session));
 				fenetre.repaint();
 				fenetre.pack();
 			}
         });
         
-        messagerieBouton.addActionListener(new ActionListener() {
+        /*messagerieBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Component[] components = fenetre.getContentPane().getComponents();
 	            for (Component component : components) {
-	            	if (component.getName().equals("pageAccueil")) {
-	                	fenetre.remove(pAccueil);
-	                }
-	            	
-	            	else if (component.getName().equals("pageConnexion")) {
-	                	fenetre.remove(pConnexion);
-	                }
-	                
-	                else if (component.getName().equals("pageInscription")) {
-	                	fenetre.remove(pInscription);
-	                }
-	                
-	                else if (component.getName().equals("pageEvent")) {
-	                	fenetre.remove(pEvent);
-	                }
-	                
-	                else if (component.getName().equals("pageMessagerie")) {
-	                	fenetre.remove(pMessagerie);
-	                }
+	            	if (!(component.getName().equals("navigationBarre"))) {
+	                	fenetre.remove(component);
+	            	}
 	            }
 				fenetre.add(pMessagerie);
 				fenetre.repaint();
 				fenetre.pack();
 			}
-        });
+        });*/
         
         inscriptionBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Component[] components = fenetre.getContentPane().getComponents();
-	            for (Component component : components) {
-	            	if (component.getName().equals("pageAccueil")) {
-	                	fenetre.remove(pAccueil);
-	                }
-	            	
-	            	else if (component.getName().equals("pageConnexion")) {
-	                	fenetre.remove(pConnexion);
-	                }
-	                
-	                else if (component.getName().equals("pageInscription")) {
-	                	fenetre.remove(pInscription);
-	                }
-	                
-	                else if (component.getName().equals("pageEvent")) {
-	                	fenetre.remove(pEvent);
-	                }
-	                
-	                else if (component.getName().equals("pageMessagerie")) {
-	                	fenetre.remove(pMessagerie);
-	                }
+				for (Component component : components) {
+	            	if (!(component.getName().equals("navigationBarre"))) {
+	                	fenetre.remove(component);
+	            	}
 	            }
 				fenetre.add(pInscription);
 				fenetre.repaint();
@@ -174,26 +125,10 @@ public class Fenetre extends JPanel implements Config{
 			public void actionPerformed(ActionEvent e) {
 				if (!session.isStatutSession()) {
 					Component[] components = fenetre.getContentPane().getComponents();
-		            for (Component component : components) {
-		            	if (component.getName().equals("pageAccueil")) {
-		                	fenetre.remove(pAccueil);
-		                }
-		            	
-		            	else if (component.getName().equals("pageConnexion")) {
-		                	fenetre.remove(pConnexion);
-		                }
-		                
-		                else if (component.getName().equals("pageInscription")) {
-		                	fenetre.remove(pInscription);
-		                }
-		                
-		                else if (component.getName().equals("pageEvent")) {
-		                	fenetre.remove(pEvent);
-		                }
-		                
-		                else if (component.getName().equals("pageMessagerie")) {
-		                	fenetre.remove(pMessagerie);
-		                }
+					for (Component component : components) {
+		            	if (!(component.getName().equals("navigationBarre"))) {
+		                	fenetre.remove(component);
+		            	}
 		            }
 				}
 				
@@ -202,6 +137,15 @@ public class Fenetre extends JPanel implements Config{
 					connexionBouton.setText("Se connecter");
 					session.setStatutSession(USER_NOT_CONNECTED);
 					session.setUser(null);
+					Component[] components = fenetre.getContentPane().getComponents();
+					for (Component component : components) {
+		            	if (component.getName().equals("pageAccueil")) {
+		                	fenetre.remove(component);
+		                	fenetre.add(new PageAccueil(connect, session));
+		                	fenetre.repaint();
+		                	fenetre.pack();
+		            	}
+		            }
 				}
 
 	            navigationBar.repaint();
@@ -214,15 +158,15 @@ public class Fenetre extends JPanel implements Config{
         
         //Ajout des boutons dans la barre de navigation
         //Boutons de gauche
-        JToolBar toolBarGauche = new JToolBar();
+        toolBarGauche = new JToolBar();
         toolBarGauche.setFloatable(false);
         toolBarGauche.addSeparator();
         toolBarGauche.add(accueilBouton);
         toolBarGauche.addSeparator();
-        toolBarGauche.add(messagerieBouton);
+        //toolBarGauche.add(messagerieBouton);
         
         //Boutons de droite
-        JToolBar toolBarDroite = new JToolBar();
+        toolBarDroite = new JToolBar();
         toolBarDroite.setFloatable(false);
         toolBarDroite.add(inscriptionBouton);
         toolBarDroite.addSeparator();

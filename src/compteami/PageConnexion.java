@@ -114,6 +114,7 @@ public class PageConnexion extends JPanel implements Config{
             		else {
             			Utilisateur new_user = new Utilisateur(69, TextPseudo.getText(), null, 0, PasswordToString);
             			if (c.Authentification(new_user)) {
+            				new_user.setId(c.trouverId(new_user.getPseudo()));
             				System.out.println("connexion ok");
             				session.setStatutSession(USER_CONNECTED);
             				session.setUser(new_user);

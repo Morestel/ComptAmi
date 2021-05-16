@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -25,6 +26,7 @@ public class PageInscription extends JPanel implements Config{
     private static final long serialVersionUID = 1L;
 
     private transient Connexion c;
+    private transient PageInscription pInscription;
     private transient JTextField TextPseudo = new JTextField("");
     private transient JPasswordField TextPassword = new JPasswordField("");
     private transient JPasswordField TextConfirmPassword = new JPasswordField("");
@@ -44,8 +46,9 @@ public class PageInscription extends JPanel implements Config{
      * Affiche la page qui permet a l'utilisateur de s'inscrire
      * @param c
      */
-    public PageInscription(Connexion c){
+    public PageInscription(Connexion c, SessionUser session){
     	this.setName("pageInscription");
+    	this.pInscription = this;
         this.c = c;
 
         //DÃ©finition taille des champs        
@@ -151,9 +154,18 @@ public class PageInscription extends JPanel implements Config{
             		else {
             			Utilisateur new_user = new Utilisateur(69, TextPseudo.getText(), TextMail.getText(), 0, PasswordToString);
             			if (c.Inscription(new_user)) {
-            				LabelErreur.setText("Votre inscription a bien été effectuée");
-            				LabelErreur.setBounds((LARGEUR_FENETRE/2 - (LabelErreur.getPreferredSize().width/2)), (BoutonValider.getY() + boutonSizeDimension.height + 10), LabelErreur.getPreferredSize().width, LabelErreur.getPreferredSize().height);
             				System.out.println("inscription ok");
+            				Component[] components = Fenetre.fenetre.getContentPane().getComponents();
+            				for (Component component : components) {
+            					if (component.getName().equals("pageInscription")) {
+            						Fenetre.fenetre.remove(pInscription);
+            						Fenetre.fenetre.add(new PageAccueil(c, session));
+            						Fenetre.userPseudoLabel.setText("Votre inscription a bien ete effectuee.");
+            					}
+            				}
+            				Fenetre.fenetre.repaint();
+            				Fenetre.navigationBar.repaint();
+            				Fenetre.fenetre.pack();
             			} else {
             				LabelErreur.setText("L'inscription a échouée");
             				LabelErreur.setBounds((LARGEUR_FENETRE/2 - (LabelErreur.getPreferredSize().width/2)), (BoutonValider.getY() + boutonSizeDimension.height + 10), LabelErreur.getPreferredSize().width, LabelErreur.getPreferredSize().height);

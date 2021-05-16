@@ -1,18 +1,13 @@
 package compteami;
 
 import java.sql.Date;
-import java.util.*;
 
-
-import javax.mail.internet.*;
-import javax.mail.*;
 
 public class Evenement {
-    private final int id;
+    private int id;
     private String intitule;
     private int budget;
     private GestionMessages gestionnaire_message;
-    private int nbEvenement = 0;
     private String texte;
     private Date start;
     private Date end;
@@ -27,6 +22,16 @@ public class Evenement {
         this.c = c;
         c.Creer_Event(this);
         this.id = c.RetournerIdEvent(this);
+    }
+
+    public Evenement(int id, String intitule, int montant, String texte, Date start, Date end){
+    	super();
+        this.id = id;
+        this.setBudget(montant);
+        this.texte = texte;
+        this.intitule = intitule;
+        this.start = start;
+        this.end = end;
     }
 
     /**

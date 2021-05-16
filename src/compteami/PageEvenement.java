@@ -3,6 +3,8 @@ package compteami;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ public class PageEvenement extends JPanel implements Config{
     private transient Connexion c;
     private transient JTextField TextMontant;
     private transient Utilisateur user;
+    private transient JButton messagerieBouton = new JButton("Messagerie");
 
     /**
      * Affiche la page de l'evenement passe en parametre
@@ -36,26 +39,28 @@ public class PageEvenement extends JPanel implements Config{
         this.user = current_user;
         this.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_PAGE));
 
+        TextMontant = new JTextField(6);
         BoutonDelete = new JButton("Supprimer");
+        BoutonDepense = new JButton("Rembourser");
+        
+        PageMessagerie pMessagerie = new PageMessagerie(event, c, user);
 
+        TextMontant.setBounds(500, 500, 50, 35);
+        TextMontant.setHorizontalAlignment(JTextField.CENTER);
+        
+        messagerieBouton.setBounds(10, 10, (messagerieBouton.getPreferredSize().width), (messagerieBouton.getPreferredSize().height));
+        
+        //Action du bouton delete
         BoutonDelete.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(final ActionEvent e) {
                c.Delete_Event(event);
             }
 
         });
-        this.add(BoutonDelete);
-
-        TextMontant = new JTextField(6);
-        TextMontant.setBounds(500, 500, 50, 35);
-        TextMontant.setHorizontalAlignment(JTextField.CENTER);
-        this.add(TextMontant);
-
-        BoutonDepense = new JButton("Rembourser");
+        
+        //Action bouton depense
         BoutonDepense.addActionListener(new ActionListener(){
-
             @Override
             public void actionPerformed(final ActionEvent e) {
                 if (!TextMontant.getText().isEmpty()){
@@ -65,10 +70,27 @@ public class PageEvenement extends JPanel implements Config{
                 }
             }
         });
+        
+        //Action bouton messagerie
+        messagerieBouton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Component[] components = Fenetre.fenetre.getContentPane().getComponents();
+	            for (Component component : components) {
+	            	if (!(component.getName().equals("navigationBarre"))) {
+	                	Fenetre.fenetre.remove(component);
+	            	}
+	            }
+	            Fenetre.fenetre.add(pMessagerie);
+	            Fenetre.fenetre.repaint();
+	            Fenetre.fenetre.pack();
+			}
+        });
+        
+        this.add(TextMontant);
+        this.add(BoutonDelete);
         this.add(BoutonDepense);
-
-        PageMessagerie pMessagerie = new PageMessagerie(event, c, user);
-        this.add(pMessagerie);
+        this.add(messagerieBouton);           
     }
 
 
