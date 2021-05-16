@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -24,6 +25,8 @@ public class PageConnexion extends JPanel implements Config{
      */
     private static final long serialVersionUID = 1L;
 
+    private transient PageConnexion pConnexion;
+    private transient PageAccueil pAccueil;
     private transient Connexion c;
     private transient JTextField TextPseudo = new JTextField("");
     private transient JPasswordField TextPassword = new JPasswordField("");
@@ -38,9 +41,11 @@ public class PageConnexion extends JPanel implements Config{
      * Affichage de la page qui permet à l'utilisateur de s'authentifier
      * @param c
      */
-    public PageConnexion(Connexion c){
+    public PageConnexion(Connexion c, SessionUser session, PageAccueil pAccueil){
     	this.setName("pageConnexion");
+    	this.pConnexion = this;
         this.c = c; 
+        this.pAccueil = pAccueil;
 
         //DÃ©finition taille des champs        
         int FieldWidth = LARGEUR_FENETRE/3;
@@ -112,9 +117,19 @@ public class PageConnexion extends JPanel implements Config{
             			Utilisateur new_user = new Utilisateur(69, TextPseudo.getText(), null, 0, PasswordToString);
             			if (c.Authentification(new_user)) {
             				System.out.println("connexion ok");
+            				session.setStatutSession(USER_CONNECTED);
+            				session.setUser(new_user);
             				Fenetre.userPseudoLabel.setText(TextPseudo.getText());
+            				Component[] components = Fenetre.fenetre.getContentPane().getComponents();
+            	            for (Component component : components) {
+            	            	if (component.getName().equals("pageConnexion")) {
+            	                	Fenetre.fenetre.remove(pConnexion);
+            	                	Fenetre.fenetre.add(pAccueil);
+            	                }
+            	            }
             				//Fenetre.userPseudoLabel.setPreferredSize(new Dimension(Fenetre.userPseudoLabel.getPreferredSize().width, Fenetre.userPseudoLabel.getPreferredSize().height));
-            				Fenetre.navigationBar.repaint();
+            				Fenetre.fenetre.repaint();
+            	            Fenetre.navigationBar.repaint();
             			} else {
                     		LabelErreur.setText("Pseudo or password are incorrect");
                     		LabelErreur.setBounds((LARGEUR_FENETRE/2 - (LabelErreur.getPreferredSize().width/2)), (BoutonValider.getY() + validerButtonSize.height + 10), LabelErreur.getPreferredSize().width, LabelErreur.getPreferredSize().height);

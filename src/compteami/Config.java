@@ -20,4 +20,8 @@ public interface Config {
     public final int PAGE_MESSAGE = 2;
     public final int PAGE_CONNEXION = 3;
     public final int PAGE_INSCRIPTION = 4;
+    
+    //SESSION
+    public final boolean USER_NOT_CONNECTED = false;
+    public final boolean USER_CONNECTED = true;
 }

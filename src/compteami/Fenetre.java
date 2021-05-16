@@ -26,8 +26,10 @@ public class Fenetre extends JPanel implements Config{
      */
     private static final long serialVersionUID = 1L;
     
-    private static JFrame fenetre;
-    private static PageEvenement pAccueil;
+    public static JFrame fenetre;
+    public static SessionUser session;
+    public static PageAccueil pAccueil;
+    private static PageEvenement pEvent;
     private static PageInscription pInscription;
     private static PageConnexion pConnexion;
     private static PageMessagerie pMessagerie;
@@ -36,7 +38,7 @@ public class Fenetre extends JPanel implements Config{
     private static JButton messagerieBouton = new JButton("Messagerie");
     private static JButton connexionBouton = new JButton("Se Connecter");
     private static JButton inscriptionBouton = new JButton("S'Inscrire");
-    public static JLabel userPseudoLabel = new JLabel("Vous n'etes pas connecte");
+    public static JLabel userPseudoLabel = new JLabel();
 
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
     public static void main(String[] args) {
@@ -48,7 +50,9 @@ public class Fenetre extends JPanel implements Config{
 		fenetre.setLocation(POS_X, POS_Y);
 		fenetre.setBackground(Color.GRAY);
         fenetre.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
-		
+        
+        session = new SessionUser(null);
+
 
         Connexion connect = new Connexion();
 		Utilisateur user = new Utilisateur(1, "Paul", "mail", 0, "BbQDuDim");
@@ -58,18 +62,21 @@ public class Fenetre extends JPanel implements Config{
         connect.Inscription(user2);
 
         Evenement event = new Evenement("Manger avec tata michelle", 40, "On mange samedi matin chez tata", new Date(2021, 04, 11), new Date(2021, 05, 11), connect);
-        pAccueil = new PageEvenement(event, connect, user);
+        pAccueil = new PageAccueil(connect, session);
+        pEvent = new PageEvenement(event, connect, user);
         pInscription = new PageInscription(connect);
-        pConnexion = new PageConnexion(connect);
+        pConnexion = new PageConnexion(connect, session, pAccueil);
         pMessagerie = new PageMessagerie(event, connect, user);
         
         //Barre de navigation
         navigationBar.setName("navigationBarre");
         navigationBar.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_NAVIGATION));
-        int maxWidth = LARGEUR_FENETRE - accueilBouton.getPreferredSize().width - messagerieBouton.getPreferredSize().width - inscriptionBouton.getPreferredSize().width - connexionBouton.getPreferredSize().width;
-        System.out.println(LARGEUR_FENETRE);
-        System.out.println(maxWidth);
-        userPseudoLabel.setBounds((LARGEUR_FENETRE/2 - userPseudoLabel.getPreferredSize().width/2), 0, maxWidth, userPseudoLabel.getPreferredSize().height);
+        if (!session.isStatutSession()) {
+        	userPseudoLabel.setText("Bonjour, veuillez vous connecter pour acceder aux differents evenements auxquels vous participez");
+        } else {
+        	userPseudoLabel.setText("Bonjour "+session.getUser().getPseudo()+" !");
+        }
+        userPseudoLabel.setBounds(0, 0, 0, 0);
 
                 
         //Action des boutons
@@ -201,9 +208,7 @@ public class Fenetre extends JPanel implements Config{
         
         JToolBar toolBarCentre = new JToolBar();
         toolBarCentre.setFloatable(false);
-        toolBarGauche.addSeparator();
         toolBarCentre.add(userPseudoLabel);
-        toolBarGauche.addSeparator();
         
         navigationBar.setFloatable(false);
         navigationBar.setLayout(new BorderLayout());
