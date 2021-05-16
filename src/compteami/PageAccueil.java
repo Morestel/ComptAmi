@@ -1,10 +1,28 @@
 package compteami;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPanel;
+import javax.swing.JToolBar;
+import javax.swing.JToolBar.Separator;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
 
 public class PageAccueil extends JPanel implements Config{
 
@@ -27,7 +45,33 @@ public class PageAccueil extends JPanel implements Config{
         
         if (session.isStatutSession()) {
         	messageAccueil.setText("Voici la liste des evenements auxquels vous participez, sinon vous pouvez en creer un en cliquant sur le bouton prevu a cette effet");
-        	this.add(createEventBouton, BorderLayout.EAST);
+        	JButton[] listeBouton = new JButton[15];
+            ArrayList<Evenement> liste = c.ChargerEvent(session.getUser().getId());
+            int i = 0;
+            int ecart = 60;
+            PageAccueil pA = this;
+            for (Evenement e : liste){
+                listeBouton[i] = new JButton(e.getIntitule());
+                listeBouton[i].setBounds(100, 100 + ecart, 180, 40);
+                listeBouton[i].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent ee) {
+                       PageEvenement pEvent = new PageEvenement(e, c, session.getUser());
+                       Component[] components = Fenetre.fenetre.getContentPane().getComponents();
+                       Fenetre.fenetre.remove(pA);
+                       Fenetre.fenetre.add(pEvent);
+                       Fenetre.fenetre.repaint();
+            	       Fenetre.navigationBar.repaint();
+            	       Fenetre.fenetre.pack();
+                    }
+                });
+                
+                this.add(listeBouton[i], BorderLayout.EAST);
+                ecart+=20;
+                i++;
+            }
+            
+            this.add(createEventBouton, BorderLayout.EAST);
         }
         
         else {

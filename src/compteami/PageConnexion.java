@@ -37,7 +37,7 @@ public class PageConnexion extends JPanel implements Config{
     private transient JLabel LabelErreur = new JLabel();
 
     /**
-     * Affichage de la page qui permet à l'utilisateur de s'authentifier
+     * Affichage de la page qui permet ï¿½ l'utilisateur de s'authentifier
      * @param c
      */
     public PageConnexion(Connexion c, SessionUser session){
@@ -119,6 +119,7 @@ public class PageConnexion extends JPanel implements Config{
             				session.setUser(new_user);
             				Fenetre.userPseudoLabel.setText(TextPseudo.getText());
             				Component[] components = Fenetre.fenetre.getContentPane().getComponents();
+                            new_user.setId(c.trouverId(new_user.getPseudo()));
             	            for (Component component : components) {
             	            	if (component.getName().equals("pageConnexion")) {
             	                	Fenetre.fenetre.remove(pConnexion);
