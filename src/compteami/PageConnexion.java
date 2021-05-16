@@ -4,8 +4,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.sun.mail.handlers.text_html;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +35,7 @@ public class PageConnexion extends JPanel implements Config{
     private transient JLabel LabelErreur = new JLabel();
 
     /**
-     * Affichage de la page qui permet à l'utilisateur de s'authentifier
+     * Affichage de la page qui permet ï¿½ l'utilisateur de s'authentifier
      * @param c
      */
     public PageConnexion(Connexion c, SessionUser session){

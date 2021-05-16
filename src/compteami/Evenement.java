@@ -87,6 +87,10 @@ public class Evenement {
         return id;
     }
 
+    public void setId(int id) {
+		this.id = id;
+	}
+
     public String getTexte(){
         return this.texte;
     }
