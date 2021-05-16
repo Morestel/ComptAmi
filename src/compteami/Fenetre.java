@@ -2,7 +2,6 @@ package compteami;
 
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.JToolBar.Separator;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +14,6 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 
 
 
@@ -29,20 +27,18 @@ public class Fenetre extends JPanel implements Config{
     public static JFrame fenetre;
     public static SessionUser session = new SessionUser(null);
     private static PageAccueil pAccueil;
-    private static PageEvenement pEvent;
     private static PageInscription pInscription;
     private static PageConnexion pConnexion;
-    private static PageMessagerie pMessagerie;
     public static JToolBar navigationBar = new JToolBar();
     public static JToolBar toolBarGauche = new JToolBar();
     public static JToolBar toolBarDroite = new JToolBar();
     private static JButton accueilBouton = new JButton("Accueil");
-    //private static JButton messagerieBouton = new JButton("Messagerie");
     public static JButton connexionBouton = new JButton("Se Connecter");
     private static JButton inscriptionBouton = new JButton("S'Inscrire");
     public static JLabel userPseudoLabel = new JLabel();
-
+    
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
+    
     public static void main(String[] args) {
 		fenetre = new JFrame("Compte Entre Amis");
         fenetre.setUndecorated(true);
@@ -54,12 +50,11 @@ public class Fenetre extends JPanel implements Config{
         fenetre.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
 
         Connexion connect = new Connexion();
-
-        //Evenement event = new Evenement("Manger avec tata michelle", 40, "On mange samedi matin chez tata", new Date(2021, 04, 11), new Date(2021, 05, 11), connect);
+        
         pAccueil = new PageAccueil(connect, session);
         pInscription = new PageInscription(connect, session);
         pConnexion = new PageConnexion(connect, session);
-        //pMessagerie = new PageMessagerie(event, connect, session.getUser());
+
         
         //Barre de navigation
         navigationBar.setName("navigationBarre");
@@ -73,7 +68,7 @@ public class Fenetre extends JPanel implements Config{
         }
         userPseudoLabel.setBounds(0, 0, 0, 0);
 
-                
+        
         //Action des boutons
         accueilBouton.addActionListener(new ActionListener() {
 			@Override
@@ -89,21 +84,6 @@ public class Fenetre extends JPanel implements Config{
 				fenetre.pack();
 			}
         });
-        
-        /*messagerieBouton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Component[] components = fenetre.getContentPane().getComponents();
-	            for (Component component : components) {
-	            	if (!(component.getName().equals("navigationBarre"))) {
-	                	fenetre.remove(component);
-	            	}
-	            }
-				fenetre.add(pMessagerie);
-				fenetre.repaint();
-				fenetre.pack();
-			}
-        });*/
         
         inscriptionBouton.addActionListener(new ActionListener() {
 			@Override
@@ -163,7 +143,6 @@ public class Fenetre extends JPanel implements Config{
         toolBarGauche.addSeparator();
         toolBarGauche.add(accueilBouton);
         toolBarGauche.addSeparator();
-        //toolBarGauche.add(messagerieBouton);
         
         //Boutons de droite
         toolBarDroite = new JToolBar();
@@ -186,7 +165,7 @@ public class Fenetre extends JPanel implements Config{
         
         fenetre.add(navigationBar, BorderLayout.NORTH);
         fenetre.add(pAccueil, BorderLayout.SOUTH);
-
+        fenetre.repaint();
         fenetre.pack();
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         device.setFullScreenWindow(fenetre);
