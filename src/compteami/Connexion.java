@@ -305,7 +305,7 @@ public class Connexion {
 	    	ts.close();
 	    	c.close();
     	}catch(SQLException e) {
-    		
+    		e.printStackTrace();
     	}
     }
 }
