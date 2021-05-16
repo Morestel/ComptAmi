@@ -47,6 +47,15 @@ public class PageAccueil extends JPanel implements Config{
         			createEventBouton.getPreferredSize().width+5,
         			createEventBouton.getPreferredSize().height);
         	
+        	createEventBouton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					PageCreationEvenement pCreationEvenement = new PageCreationEvenement(c,session.getUser());
+					
+				}
+			});
+        	
         	//Boutons des evenements
         	JButton[] listeBouton = new JButton[15];
             ArrayList<Evenement> liste = c.ChargerEvent(session.getUser().getId());
