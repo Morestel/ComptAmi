@@ -18,13 +18,14 @@ public class PageCreationEvenement implements Config{
 	private static Evenement event;
 	private static JTextField intituleField = new JTextField();
 	private static JTextField descriptionField = new JTextField();
-	private static JLabel montantJLabel = new JLabel("0");
+	private static JLabel argentJLabel = new JLabel("0");
 	private static JButton augmenterMontantButton = new JButton("+");
 	private static JButton diminuerMontantButton = new JButton("-");
 	private static JButton creationEvenementButton = new JButton("Creer");
 	private static JLabel intituleJLabel = new JLabel("Intitule de l'evenement :");
 	private static JLabel descriptionJLabel = new JLabel("Description :");
-	private static JLabel startDateJLabel = new JLabel("Date de début :");
+	private static JLabel montantJLabel = new JLabel("Montant :");
+	private static JLabel startDateJLabel = new JLabel("Date de dÃ©but :");
 	private static JLabel endDateJLabel = new JLabel("Date de fin :");
 	private static JTextField startDateField = new JTextField("yyyy-mm-dd");
 	private static JTextField endDateField = new JTextField("yyyy-mm-dd");
@@ -41,8 +42,9 @@ public class PageCreationEvenement implements Config{
 		descriptionJLabel.setBounds(intituleJLabel.getX(), (intituleJLabel.getY()+intituleJLabel.getHeight()+10), descriptionJLabel.getPreferredSize().width+2, descriptionJLabel.getPreferredSize().height);
 		intituleField.setBounds((intituleJLabel.getX()+intituleJLabel.getWidth()+5), intituleJLabel.getY(), 300, intituleField.getPreferredSize().height);
 		descriptionField.setBounds(descriptionJLabel.getX()+descriptionJLabel.getWidth()+5, descriptionJLabel.getY(), 300, descriptionField.getPreferredSize().height);
-		montantJLabel.setBounds(descriptionField.getX(), (descriptionField.getY()+descriptionField.getHeight()+10), montantJLabel.getPreferredSize().width, montantJLabel.getPreferredSize().height);
-		diminuerMontantButton.setBounds(montantJLabel.getX(), (montantJLabel.getY()+montantJLabel.getHeight()+10), diminuerMontantButton.getPreferredSize().width, diminuerMontantButton.getPreferredSize().height);
+		montantJLabel.setBounds(descriptionJLabel.getX(), descriptionJLabel.getY()+descriptionJLabel.getHeight()+10, montantJLabel.getPreferredSize().width+2, montantJLabel.getPreferredSize().height);
+		argentJLabel.setBounds(descriptionField.getX(), (descriptionField.getY()+descriptionField.getHeight()+10), argentJLabel.getPreferredSize().width+20, argentJLabel.getPreferredSize().height);
+		diminuerMontantButton.setBounds(argentJLabel.getX(), (argentJLabel.getY()+argentJLabel.getHeight()+10), diminuerMontantButton.getPreferredSize().width, diminuerMontantButton.getPreferredSize().height);
 		augmenterMontantButton.setBounds((diminuerMontantButton.getX()+diminuerMontantButton.getPreferredSize().width +5), diminuerMontantButton.getY(), augmenterMontantButton.getPreferredSize().width, augmenterMontantButton.getPreferredSize().height);
 		startDateJLabel.setBounds(diminuerMontantButton.getX(), (diminuerMontantButton.getY()+diminuerMontantButton.getHeight()+10), startDateJLabel.getPreferredSize().width+2, startDateJLabel.getPreferredSize().height);
 		startDateField.setBounds(startDateJLabel.getX()+startDateJLabel.getWidth()+5, startDateJLabel.getY(), startDateField.getPreferredSize().width+2 , startDateField.getPreferredSize().height);
@@ -50,17 +52,19 @@ public class PageCreationEvenement implements Config{
 		endDateField.setBounds(endDateJLabel.getX()+endDateJLabel.getWidth()+5, endDateJLabel.getY(), endDateField.getPreferredSize().width+2 , endDateField.getPreferredSize().height);
 		creationEvenementButton.setBounds(endDateJLabel.getX(), (endDateJLabel.getY()+endDateJLabel.getHeight()+10), (creationEvenementButton.getPreferredSize().width+2) , creationEvenementButton.getPreferredSize().height);
 		
+
+		
 		
 		//Action des boutons
 		diminuerMontantButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int montant = Integer.parseInt(montantJLabel.getText());
+				int montant = Integer.parseInt(argentJLabel.getText());
 				if (montant > 0) {
 					montant--;
 				}
-				montantJLabel.setText(montant+"");
+				argentJLabel.setText(montant+"");
 			}
 		});
 		
@@ -68,9 +72,9 @@ public class PageCreationEvenement implements Config{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int montant = Integer.parseInt(montantJLabel.getText());
+				int montant = Integer.parseInt(argentJLabel.getText());
 				montant++;
-				montantJLabel.setText(montant+"");				
+				argentJLabel.setText(montant+"");				
 			}
 		});
 		
@@ -86,7 +90,7 @@ public class PageCreationEvenement implements Config{
 					java.util.Date endDate = format.parse(endDateString);
 					java.sql.Date startSQLDate = new java.sql.Date(startDate.getTime());
 					java.sql.Date endSQLDate = new java.sql.Date(endDate.getTime());
-					event = new Evenement(0, intituleField.getText(), Integer.parseInt(montantJLabel.getText()), descriptionField.getText(), startSQLDate, endSQLDate);
+					event = new Evenement(0, intituleField.getText(), Integer.parseInt(argentJLabel.getText()), descriptionField.getText(), startSQLDate, endSQLDate);
 					c.Creer_Event(event);
 					String id_userString = String.valueOf(c.trouverId(current_user.getPseudo()));
 					c.Participe(id_userString,event);
@@ -101,6 +105,7 @@ public class PageCreationEvenement implements Config{
 		fenetre.add(intituleField);
 		fenetre.add(descriptionField);
 		fenetre.add(montantJLabel);
+		fenetre.add(argentJLabel);
 		fenetre.add(augmenterMontantButton);
 		fenetre.add(diminuerMontantButton);
 		fenetre.add(startDateJLabel);
