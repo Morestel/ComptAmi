@@ -27,8 +27,8 @@ public class Fenetre extends JPanel implements Config{
     private static final long serialVersionUID = 1L;
     
     public static JFrame fenetre;
-    public static SessionUser session;
-    public static PageAccueil pAccueil;
+    public static SessionUser session = new SessionUser(null);
+    private static PageAccueil pAccueil;
     private static PageEvenement pEvent;
     private static PageInscription pInscription;
     private static PageConnexion pConnexion;
@@ -51,7 +51,9 @@ public class Fenetre extends JPanel implements Config{
 		fenetre.setBackground(Color.GRAY);
         fenetre.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
         
-        session = new SessionUser(null);
+        /*Utilisateur user3 = new Utilisateur(0, "Zouzou", "mail", 0, "zouzou");
+        session.setUser(user3);
+        session.setStatutSession(USER_CONNECTED);*/
 
 
         Connexion connect = new Connexion();
@@ -65,7 +67,7 @@ public class Fenetre extends JPanel implements Config{
         pAccueil = new PageAccueil(connect, session);
         pEvent = new PageEvenement(event, connect, user);
         pInscription = new PageInscription(connect);
-        pConnexion = new PageConnexion(connect, session, pAccueil);
+        pConnexion = new PageConnexion(connect, session);
         pMessagerie = new PageMessagerie(event, connect, user);
         
         //Barre de navigation
@@ -85,7 +87,11 @@ public class Fenetre extends JPanel implements Config{
 			public void actionPerformed(ActionEvent e) {
 				Component[] components = fenetre.getContentPane().getComponents();
 	            for (Component component : components) {
-	            	if (component.getName().equals("pageConnexion")) {
+	            	if (component.getName().equals("pageAccueil")) {
+	                	fenetre.remove(pAccueil);
+	                }
+	            	
+	            	else if (component.getName().equals("pageConnexion")) {
 	                	fenetre.remove(pConnexion);
 	                }
 	                
@@ -94,7 +100,7 @@ public class Fenetre extends JPanel implements Config{
 	                }
 	                
 	                else if (component.getName().equals("pageEvent")) {
-	                	fenetre.remove(pAccueil);
+	                	fenetre.remove(pEvent);
 	                }
 	                
 	                else if (component.getName().equals("pageMessagerie")) {
@@ -112,7 +118,11 @@ public class Fenetre extends JPanel implements Config{
 			public void actionPerformed(ActionEvent e) {
 				Component[] components = fenetre.getContentPane().getComponents();
 	            for (Component component : components) {
-	                if (component.getName().equals("pageConnexion")) {
+	            	if (component.getName().equals("pageAccueil")) {
+	                	fenetre.remove(pAccueil);
+	                }
+	            	
+	            	else if (component.getName().equals("pageConnexion")) {
 	                	fenetre.remove(pConnexion);
 	                }
 	                
@@ -121,7 +131,7 @@ public class Fenetre extends JPanel implements Config{
 	                }
 	                
 	                else if (component.getName().equals("pageEvent")) {
-	                	fenetre.remove(pAccueil);
+	                	fenetre.remove(pEvent);
 	                }
 	                
 	                else if (component.getName().equals("pageMessagerie")) {
@@ -139,7 +149,11 @@ public class Fenetre extends JPanel implements Config{
 			public void actionPerformed(ActionEvent e) {
 				Component[] components = fenetre.getContentPane().getComponents();
 	            for (Component component : components) {
-	                if (component.getName().equals("pageConnexion")) {
+	            	if (component.getName().equals("pageAccueil")) {
+	                	fenetre.remove(pAccueil);
+	                }
+	            	
+	            	else if (component.getName().equals("pageConnexion")) {
 	                	fenetre.remove(pConnexion);
 	                }
 	                
@@ -148,7 +162,7 @@ public class Fenetre extends JPanel implements Config{
 	                }
 	                
 	                else if (component.getName().equals("pageEvent")) {
-	                	fenetre.remove(pAccueil);
+	                	fenetre.remove(pEvent);
 	                }
 	                
 	                else if (component.getName().equals("pageMessagerie")) {
@@ -166,7 +180,11 @@ public class Fenetre extends JPanel implements Config{
 			public void actionPerformed(ActionEvent e) {
 				Component[] components = fenetre.getContentPane().getComponents();
 	            for (Component component : components) {
-	                if (component.getName().equals("pageConnexion")) {
+	            	if (component.getName().equals("pageAccueil")) {
+	                	fenetre.remove(pAccueil);
+	                }
+	            	
+	            	else if (component.getName().equals("pageConnexion")) {
 	                	fenetre.remove(pConnexion);
 	                }
 	                
@@ -175,7 +193,7 @@ public class Fenetre extends JPanel implements Config{
 	                }
 	                
 	                else if (component.getName().equals("pageEvent")) {
-	                	fenetre.remove(pAccueil);
+	                	fenetre.remove(pEvent);
 	                }
 	                
 	                else if (component.getName().equals("pageMessagerie")) {
@@ -241,7 +259,7 @@ public class Fenetre extends JPanel implements Config{
         // System.out.println(event.getBudget());
         
         fenetre.add(navigationBar, BorderLayout.NORTH);
-        fenetre.add(pAccueil, BorderLayout.SOUTH);
+        fenetre.add(pEvent, BorderLayout.SOUTH);
         
         // PageMessagerie pMessagerie = new PageMessagerie(event, connect, user);
         // fenetre.add(pMessagerie);
