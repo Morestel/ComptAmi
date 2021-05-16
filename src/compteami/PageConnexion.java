@@ -123,6 +123,7 @@ public class PageConnexion extends JPanel implements Config{
             	            	if (component.getName().equals("pageConnexion")) {
             	                	Fenetre.fenetre.remove(pConnexion);
             	                	Fenetre.fenetre.add(new PageAccueil(c, session));
+            	                	Fenetre.connexionBouton.setText("Se deconnecter");
             	                }
             	            }
             				//Fenetre.userPseudoLabel.setPreferredSize(new Dimension(Fenetre.userPseudoLabel.getPreferredSize().width, Fenetre.userPseudoLabel.getPreferredSize().height));

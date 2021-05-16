@@ -36,7 +36,7 @@ public class Fenetre extends JPanel implements Config{
     public static JToolBar navigationBar = new JToolBar();
     private static JButton accueilBouton = new JButton("Accueil");
     private static JButton messagerieBouton = new JButton("Messagerie");
-    private static JButton connexionBouton = new JButton("Se Connecter");
+    public static JButton connexionBouton = new JButton("Se Connecter");
     private static JButton inscriptionBouton = new JButton("S'Inscrire");
     public static JLabel userPseudoLabel = new JLabel();
 
@@ -77,6 +77,8 @@ public class Fenetre extends JPanel implements Config{
         	userPseudoLabel.setText("Bonjour, veuillez vous connecter pour acceder aux differents evenements auxquels vous participez");
         } else {
         	userPseudoLabel.setText("Bonjour "+session.getUser().getPseudo()+" !");
+        	connexionBouton.setText("Se Deconnecter");
+        	navigationBar.repaint();
         }
         userPseudoLabel.setBounds(0, 0, 0, 0);
 
@@ -178,28 +180,39 @@ public class Fenetre extends JPanel implements Config{
         connexionBouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Component[] components = fenetre.getContentPane().getComponents();
-	            for (Component component : components) {
-	            	if (component.getName().equals("pageAccueil")) {
-	                	fenetre.remove(pAccueil);
-	                }
-	            	
-	            	else if (component.getName().equals("pageConnexion")) {
-	                	fenetre.remove(pConnexion);
-	                }
-	                
-	                else if (component.getName().equals("pageInscription")) {
-	                	fenetre.remove(pInscription);
-	                }
-	                
-	                else if (component.getName().equals("pageEvent")) {
-	                	fenetre.remove(pEvent);
-	                }
-	                
-	                else if (component.getName().equals("pageMessagerie")) {
-	                	fenetre.remove(pMessagerie);
-	                }
-	            }
+				if (!session.isStatutSession()) {
+					Component[] components = fenetre.getContentPane().getComponents();
+		            for (Component component : components) {
+		            	if (component.getName().equals("pageAccueil")) {
+		                	fenetre.remove(pAccueil);
+		                }
+		            	
+		            	else if (component.getName().equals("pageConnexion")) {
+		                	fenetre.remove(pConnexion);
+		                }
+		                
+		                else if (component.getName().equals("pageInscription")) {
+		                	fenetre.remove(pInscription);
+		                }
+		                
+		                else if (component.getName().equals("pageEvent")) {
+		                	fenetre.remove(pEvent);
+		                }
+		                
+		                else if (component.getName().equals("pageMessagerie")) {
+		                	fenetre.remove(pMessagerie);
+		                }
+		            }
+				}
+				
+				else {
+					userPseudoLabel.setText("Bonjour, veuillez vous connecter pour acceder aux differents evenements auxquels vous participez");
+					connexionBouton.setText("Se connecter");
+					session.setStatutSession(USER_NOT_CONNECTED);
+					session.setUser(null);
+				}
+
+	            navigationBar.repaint();
 				fenetre.add(pConnexion);
 				fenetre.repaint();
 				fenetre.pack();
