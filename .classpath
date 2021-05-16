@@ -7,7 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/jdbc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/json-20210307.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/smtp.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/javax.mail.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Kévin-PC/Documents/Eclipse/ComptAmi/mailapi.jar"/>
