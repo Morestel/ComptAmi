@@ -1,5 +1,12 @@
 package compteami;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.sql.*;
 import java.util.ArrayList;
 // import java.util.Date;
@@ -41,6 +48,21 @@ public class Connexion {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        final int PORT = 8001;
+        
+        try {
+            Socket s = new Socket("localhost", PORT);
+            InputStream in = s.getInputStream();
+            OutputStream out;
+            out = s.getOutputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            PrintWriter writer = new PrintWriter(out);
+            
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
     }
 
     /**
@@ -144,7 +166,7 @@ public class Connexion {
     /**
     * Trouve id en fonction d'un pseudo
     * @param pseudo
-    * @return id à retourner
+    * @return id ï¿½ retourner
     */
    public int trouverId(String pseudo) {
        String query = "SELECT Id FROM Utilisateur WHERE pseudo = '"+ pseudo + "' "; 
@@ -277,7 +299,7 @@ public class Connexion {
     }
     
     /**
-     * Récupère event qui concerne le user
+     * Rï¿½cupï¿½re event qui concerne le user
      * @param id_user
      * @return
      */
