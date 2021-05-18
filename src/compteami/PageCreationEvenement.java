@@ -24,12 +24,8 @@ public class PageCreationEvenement implements Config{
 	private static JButton creationEvenementButton = new JButton("Creer");
 	private static JLabel intituleJLabel = new JLabel("Intitule de l'evenement :");
 	private static JLabel descriptionJLabel = new JLabel("Description :");
-<<<<<<< HEAD
-	private static JLabel startDateJLabel = new JLabel("Date de d�but :");
-=======
 	private static JLabel montantJLabel = new JLabel("Montant :");
 	private static JLabel startDateJLabel = new JLabel("Date de début :");
->>>>>>> 9ab9af14322cb35ddb355552c96f9c45356fdfc5
 	private static JLabel endDateJLabel = new JLabel("Date de fin :");
 	private static JTextField startDateField = new JTextField("yyyy-mm-dd");
 	private static JTextField endDateField = new JTextField("yyyy-mm-dd");
@@ -99,7 +95,7 @@ public class PageCreationEvenement implements Config{
 					event.setId(c.RetournerIdEvent(event));
 					String id_userString = String.valueOf(current_user.getId());
 					c.Participe(id_userString, event);
-					
+					fenetre.dispose();
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}	
